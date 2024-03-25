@@ -1,0 +1,39 @@
+{% extends 'snippet/base.html' %}
+
+{% block title %}
+    {{ page_title }}
+{% endblock title %}
+
+
+{% block content %}
+
+{% include 'snippet/back.html' %}
+ 
+    <h3>{{ object.title }}</h3>
+    <h5>Diturlis oleh: {{ object.author.name }}</h5>
+    <p>{{ object.description }}</p>
+
+    <h3>Related Blog</h3>
+    
+    {% for blog in other_blogs %}
+        <div class="card p-3 m-3">
+            <h3 data-blog-detail-url="{% url 'blog:detail' blog.slug %}" onclick="blogHandler(this)">{{ blog.title }}</h3>
+            <h5>Diturlis oleh: {{ blog.author.name }}</h5>
+            <p>{{ blog.description|truncatechars:500 }}</p>
+            </div>
+        </div>
+    {% endfor %}
+        
+
+{% endblock content %}
+
+{% block script %}
+<script>
+      const blogHandler = (e) => {
+        const dataUrl = e.dataset.blogDetailUrl
+           window.location.href = dataUrl
+      }
+</script>
+{% endblock script %}
+    
+    

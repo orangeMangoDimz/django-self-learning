@@ -1,0 +1,22 @@
+{% extends 'snippet/base.html' %}
+
+
+{% block title %}
+    {{ course.title }}
+{% endblock title %}
+
+{% block content %}
+<h3 class="text-start w-75">Update a Course</h3>
+<form class="w-75" method="POST" action="{% url 'course:course_edit' course.slug %}">
+  {% csrf_token %}
+  {% for field in course_form %}
+  <div class="mb-3">
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{ field }}
+    {{ field.erros }}
+  </div>
+    {% endfor %}
+  <button type="submit" class="btn btn-primary">Update</button>
+</form>
+{% endblock content %}
+    

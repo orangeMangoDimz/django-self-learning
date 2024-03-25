@@ -1,0 +1,38 @@
+{% extends 'snippet/base.html' %}
+
+
+{% block content %}
+<div class="w-100 d-flex justify-content-center align-items-center flex-column">
+  <div class="w-50 d-flex justify-content-center align-items-start flex-column gap-4">
+    <h3>Login Page</h3>
+    {% if messages %}
+      <div class="alert alert-danger w-100">
+        <ul>
+          {% for message in messages %}
+          <li>
+            {{ message }}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  </div>
+    <form class="w-50" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Username</label>
+          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="username" placeholder="input your username ...">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="input your password ...">
+        </div>
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1" name="remember">Remember Me!</label>
+        </div>
+        <button type="submit" class="btn btn-outline-dark">Login</button>
+      </form>
+</div>
+{% endblock content %}
+    

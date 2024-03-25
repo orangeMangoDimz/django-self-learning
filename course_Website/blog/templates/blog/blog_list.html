@@ -1,0 +1,74 @@
+{% extends 'snippet/base.html' %}
+
+{% block title %}
+    {{ page_title }}
+{% endblock title %}
+
+
+{% block style %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+{% endblock style %}
+        
+
+{% block content %}
+    <div class="d-flex w-100 justify-content-start align-items-start gap-3">
+        <a class="btn btn-outline-primary" href="/blog/1">All</a>
+        {% for c in categories %}
+            <a class="btn btn-outline-primary" href="{% url 'blog:category' category=c.category page=1 %}">{{ c.category }}</a>
+        {% endfor %}
+    </div>
+        
+    <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="{% url 'blog:create' %}">+ Create Blog</a>
+    
+    {% for content in object_list %}
+    <div class="card p-3 m-3 w-100">
+        <div class="d-flex justify-content-between align-items-center gap-5">
+            <h3 data-blog-detail-url="{% url 'blog:detail' content.slug %}" onclick="blogHandler(this)">{{ content.title }}</h3>
+            <div class="d-flex justify-content-center align-items-center gap-3">
+                <a href="{% url 'blog:update' content.id %}" class="btn btn-outline-dark">
+                    <span>
+                        <i class="bi bi-pencil"></i>
+                    </span>
+                </a>
+                <a href="{% url 'blog:delete' content.id %}" class="btn btn-outline-danger">
+                    <span>
+                        <i class="bi bi-trash"></i>
+                    </span>
+                </a>
+            </div>
+            {% comment %} <button data-blog-detail-url="{% url 'blog:update' content.id  %}" type="button" onclick="blogHandler(this)" class="btn btn-outline-dark">Edit</button> {% endcomment %}
+        </div>
+        <h5>Diturlis oleh: {{ content.author.name }}</h5>
+        <p>{{ content.description|truncatechars:500 }}</p>
+    </div>
+    {% endfor %}
+
+    
+    {% if is_paginated %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="{% url 'blog:index' page_obj.previous_page_number %}">Previous</a></li>
+            {% endif %}
+            {% for i in paginator.page_range %}
+                <li class="page-item"><a class="page-link" href="{{ i }}">{{ i }}</a></li>
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="{{ page_obj.paginator.num_pages }}">Next</a></li>
+            {% endif %}
+        </ul>
+      </nav>
+      {% endif %}    
+{% endblock content %}
+
+{% block script %}
+<script>
+      const blogHandler = (e) => {
+        const dataUrl = e.dataset.blogDetailUrl
+        console.log(dataUrl)
+           window.location.href = dataUrl
+      }
+</script>
+{% endblock script %}
+    
+    
