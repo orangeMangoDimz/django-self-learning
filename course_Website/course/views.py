@@ -53,11 +53,11 @@ class CourseFormView(View):
     
     def get(self, *args, **kwargs):
         # Check group
-        test_group = Group.objects.get(name='creator')
-        user_group = self.request.user.groups.all()
+        # test_group = Group.objects.get(name='create')
+        # user_group = self.request.user.groups.all()
         
-        if test_group not in user_group:
-            return redirect('main:home')    
+        # if test_group not in user_group:
+        #     return redirect('main:home')    
         
         if self.mode == 'update': 
             course = get_object_or_404(Course, slug=kwargs['slug'])
